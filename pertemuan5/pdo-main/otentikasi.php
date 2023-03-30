@@ -17,7 +17,7 @@ if(!empty($row)){
     $st1 = $dbh->prepare($sql_last);
     $st1->execute([$row['id']]);
     
-    header('location:produk.php');
+    header('location:pelanggan.php');
 }else{
     header('location:login.php?status=gagal');
 }
