@@ -4,6 +4,20 @@ require_once '../dbkoneksi.php';
 
 <form method="POST" action="proses.php">
     <div class="form-group row">
+        <label for="tanggal" class="col-4 col-form-label">Tanggal</label>
+        <div class="col-8">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fa fa-adjust"></i>
+                    </div>
+                </div>
+                <input id="tanggal" name="tanggal" type="text" class="form-control" value="">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label for="nomor" class="col-4 col-form-label">Nomor</label>
         <div class="col-8">
             <div class="input-group">
@@ -12,13 +26,13 @@ require_once '../dbkoneksi.php';
                         <i class="fa fa-adjust"></i>
                     </div>
                 </div>
-                <input id="nomor" name="nomor" type="number" class="form-control" value="">
+                <input id="nomor" name="nomor" type="text" class="form-control" value="">
             </div>
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="nama" class="col-4 col-form-label">Nama</label>
+        <label for="produk_id" class="col-4 col-form-label">Produk_id</label>
         <div class="col-8">
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -26,13 +40,13 @@ require_once '../dbkoneksi.php';
                         <i class="fa fa-adjust"></i>
                     </div>
                 </div>
-                <input id="nama" name="nama" type="text" class="form-control" value="">
+                <input id="produk_id" name="produk_id" type="text" class="form-control" value="">
             </div>
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="kota" class="col-4 col-form-label">Kota</label>
+        <label for="jumlah" class="col-4 col-form-label">Jumlah</label>
         <div class="col-8">
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -40,13 +54,13 @@ require_once '../dbkoneksi.php';
                         <i class="fa fa-adjust"></i>
                     </div>
                 </div>
-                <input id="kota" name="kota" type="text" class="form-control" value="">
+                <input id="jumlah" name="jumlah" type="text" class="form-control" value="">
             </div>
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="kontak" class="col-4 col-form-label">Kontak</label>
+        <label for="harga" class="col-4 col-form-label">Harga</label>
         <div class="col-8">
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -54,7 +68,21 @@ require_once '../dbkoneksi.php';
                         <i class="fa fa-adjust"></i>
                     </div>
                 </div>
-                <input id="kontak" name="kontak" type="text" class="form-control" value="">
+                <input id="harga" name="harga" type="text" class="form-control" value="">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="vendor_id" class="col-4 col-form-label">Vendor_id</label>
+        <div class="col-8">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fa fa-adjust"></i>
+                    </div>
+                </div>
+                <input id="vendor_id" name="vendor_id" type="text" class="form-control" value="">
             </div>
         </div>
     </div>

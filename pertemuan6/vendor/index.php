@@ -13,7 +13,7 @@ $rs = $dbh->query($sql);
             <th>nomor</th>
             <th>Nama</th>
             <th>Kota</th>
-            <th>Kota</th>
+            <th>Kontak</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -24,14 +24,14 @@ $rs = $dbh->query($sql);
         ?>
             <tr>
                 <td><?= $nomor ?></td>
-                <td><?= $row['kode'] ?></td>
+                <td><?= $row['nomor'] ?></td>
                 <td><?= $row['nama'] ?></td>
-                <td><?= $row['diskon'] ?></td>
-                <td><?= $row['iuran'] ?></td>
+                <td><?= $row['kota'] ?></td>
+                <td><?= $row['kontak'] ?></td>
                 <td>
                     <a class="btn btn-primary" href="view.php?id=<?= $row['id'] ?>">View</a>
                     <a class="btn btn-primary" href="edit.php?idedit=<?= $row['id'] ?>">Edit</a>
-                    <a class="btn btn-primary <?= $row['is_pelanggan'] ? 'disabled' : '' ?>" href="delete.php?iddel=<?= $row['id'] ?>" onclick="if(!confirm('Anda Yakin Hapus Data Produk <?= $row['nama'] ?>?')) {return false}">Delete</a>
+                    <a class="btn btn-primary <?= $row['is_pembelian'] ? 'disabled' : '' ?>" href="delete.php?iddel=<?= $row['id'] ?>" onclick="if(!confirm('Anda Yakin Hapus Data Produk <?= $row['nama'] ?>?')) {return false}">Delete</a>
                 </td>
             </tr>
         <?php

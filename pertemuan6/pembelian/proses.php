@@ -2,25 +2,29 @@
 require_once '../dbkoneksi.php';
 ?>
 <?php
-$_kode = $_POST['kode'];
-$_nama = $_POST['nama'];
-$_diskon = $_POST['diskon'];
-$_iuran = $_POST['iuran'];
+$_tanggal = $_POST['tanggal'];
+$_nomor = $_POST['nomor'];
+$_produk_id = $_POST['produk_id'];
+$_jumlah = $_POST['jumlah'];
+$_harga = $_POST['harga'];
+$_vendor_id = $_POST['vendor_id'];
 
 $_proses = $_POST['proses'];
 
 // array data
-$ar_data[] = $_kode; // ? 1
-$ar_data[] = $_nama; // ? 2
-$ar_data[] = $_diskon; // 3
-$ar_data[] = $_iuran;
+$ar_data[] = $_tanggal; // ? 2
+$ar_data[] = $_nomor; // ? 1
+$ar_data[] = $_produk_id; // 3
+$ar_data[] = $_jumlah;
+$ar_data[] = $_harga;
+$ar_data[] = $_vendor_id;
 
 if ($_proses == "Simpan") {
     // data baru
-    $sql = "INSERT INTO kartu (kode,nama,diskon,iuran) VALUES (?,?,?,?)";
+    $sql = "INSERT INTO pembelian (tanggal,nomor,produk_id,jumlah,harga,vendor_id) VALUES (?,?,?,?,?,?)";
 } else if ($_proses == "Update") {
     $ar_data[] = $_POST['idedit']; // ? 8
-    $sql = "UPDATE kartu SET kode=?,nama=?,diskon=?,iuran=? WHERE id=?";
+    $sql = "UPDATE pembelian SET kontak=?,nomor=?,produk_id=?,jumlah=?,harga=?,vendor_id=? WHERE id=?";
 }
 if (isset($sql)) {
     $st = $dbh->prepare($sql);

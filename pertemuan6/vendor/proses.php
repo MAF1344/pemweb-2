@@ -2,25 +2,25 @@
 require_once '../dbkoneksi.php';
 ?>
 <?php
-$_kode = $_POST['kode'];
+$_nomor = $_POST['nomor'];
 $_nama = $_POST['nama'];
-$_diskon = $_POST['diskon'];
-$_iuran = $_POST['iuran'];
+$_kota = $_POST['kota'];
+$_kontak = $_POST['kontak'];
 
 $_proses = $_POST['proses'];
 
 // array data
-$ar_data[] = $_kode; // ? 1
+$ar_data[] = $_nomor; // ? 1
 $ar_data[] = $_nama; // ? 2
-$ar_data[] = $_diskon; // 3
-$ar_data[] = $_iuran;
+$ar_data[] = $_kota; // 3
+$ar_data[] = $_kontak;
 
 if ($_proses == "Simpan") {
     // data baru
-    $sql = "INSERT INTO kartu (kode,nama,diskon,iuran) VALUES (?,?,?,?)";
+    $sql = "INSERT INTO vendor (nomor,nama,kota,kontak) VALUES (?,?,?,?)";
 } else if ($_proses == "Update") {
     $ar_data[] = $_POST['idedit']; // ? 8
-    $sql = "UPDATE kartu SET kode=?,nama=?,diskon=?,iuran=? WHERE id=?";
+    $sql = "UPDATE vendor SET nomor=?,nama=?,kota=?,kontak=? WHERE id=?";
 }
 if (isset($sql)) {
     $st = $dbh->prepare($sql);
