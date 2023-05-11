@@ -1,10 +1,3 @@
-<?php
-require_once 'koneksi.php';
-?>
-<?php
-$sql = "SELECT * FROM produk";
-$rs = $dbh->query($sql);
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +9,7 @@ $rs = $dbh->query($sql);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Daftar Produk</title>
+    <title>E-Commerce Elektronik</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,12 +17,13 @@ $rs = $dbh->query($sql);
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+
+    <!-- FontAwasome -->
+    <script src="https://kit.fontawesome.com/d09ee2361d.js" crossorigin="anonymous"></script>
 
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -43,6 +37,7 @@ $rs = $dbh->query($sql);
                 </div>
                 <div class="sidebar-brand-text mx-3">E-Commerce</div>
             </a>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -136,7 +131,6 @@ $rs = $dbh->query($sql);
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
-                            <!-- Dropdown - User Information -->
                         </li>
 
                     </ul>
@@ -144,28 +138,47 @@ $rs = $dbh->query($sql);
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Daftar Produk -->
-
-                <div class="kartu" style="display: grid;">
-                    <?php foreach ($rs as $row) { ?>
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img alt="Bootstrap Image Preview" src="img/petir.png" style="width: 100%;" />
-                                </div>
-                                <div class="col-md-8">
-                                    <h3><?= $row['nama'] ?></h3>
-                                    <p><?= $row['deskripsi'] ?></p>
-                                </div>
-                                <div class="col-md-2">
-                                    <a class=" btn btn-primary" href="view_produk.php?id=<?= $row['id'] ?>">Detail Produk</a>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                    <?php } ?>
-                </div>
-                <!-- Akhir Daftar Produk -->
+                <!-- Detail Pesanan -->
+                <?php
+                require_once 'koneksi.php';
+                ?>
+                <?php
+                $_id = $_GET['id'];
+                $sql = "SELECT pesanan.*, produk.nama AS nama_produk FROM pesanan JOIN produk ON pesanan.produk = produk.id WHERE pesanan.id=?";
+                $st = $dbh->prepare($sql);
+                $st->execute([$_id]);
+                $row = $st->fetch();
+                ?>
+                <h1 style="margin: 2rem;">DETAIL PESANAN</h1>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Nama</td>
+                            <td><?= $row['nama'] ?></td>
+                        </tr>
+                        <tr>
+                            <td>Alamat</td>
+                            <td><?= $row['alamat'] ?></td>
+                        </tr>
+                        <tr>
+                            <td>Quantity</td>
+                            <td><?= $row['qty'] ?></td>
+                        </tr>
+                        <tr>
+                            <td>Produk</td>
+                            <td><?= $row['nama_produk'] ?></td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal</td>
+                            <td><?= $row['tanggal'] ?></td>
+                        </tr>
+                        <tr>
+                            <td>Total Harga</td>
+                            <td>Rp. <?= $_format_harga = number_format($row['total_harga'], 0, ',', '.'); ?>,-</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Akhir Detail Pesanan -->
             </div>
             <!-- End of Main Content -->
 
@@ -173,7 +186,7 @@ $rs = $dbh->query($sql);
             <!-- <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; Your Website 2021</span>
                     </div>
                 </div>
             </footer> -->
@@ -218,6 +231,13 @@ $rs = $dbh->query($sql);
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 

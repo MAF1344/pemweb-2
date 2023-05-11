@@ -2,11 +2,18 @@
 require_once 'koneksi.php';
 ?>
 <?php
-$sql = "SELECT * FROM produk";
-$rs = $dbh->query($sql);
+$_idedit = $_GET['idedit'];
+if (!empty($_idedit)) {
+    // edit
+    $sql = "SELECT * FROM produk WHERE id=?";
+    $st = $dbh->prepare($sql);
+    $st->execute([$_idedit]);
+    $row = $st->fetch();
+} else {
+    // new data
+    $row = [];
+}
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
 
@@ -16,7 +23,7 @@ $rs = $dbh->query($sql);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Daftar Produk</title>
+    <title>Form Edit Produk</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,7 +31,6 @@ $rs = $dbh->query($sql);
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -43,6 +49,7 @@ $rs = $dbh->query($sql);
                 </div>
                 <div class="sidebar-brand-text mx-3">E-Commerce</div>
             </a>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -136,89 +143,86 @@ $rs = $dbh->query($sql);
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
-                            <!-- Dropdown - User Information -->
                         </li>
 
                     </ul>
 
                 </nav>
                 <!-- End of Topbar -->
-
-                <!-- Daftar Produk -->
-
-                <div class="kartu" style="display: grid;">
-                    <?php foreach ($rs as $row) { ?>
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img alt="Bootstrap Image Preview" src="img/petir.png" style="width: 100%;" />
-                                </div>
-                                <div class="col-md-8">
-                                    <h3><?= $row['nama'] ?></h3>
-                                    <p><?= $row['deskripsi'] ?></p>
-                                </div>
-                                <div class="col-md-2">
-                                    <a class=" btn btn-primary" href="view_produk.php?id=<?= $row['id'] ?>">Detail Produk</a>
-                                </div>
+                <form method="POST" action="proses_produk.php">
+                    <div class="form-group row">
+                        <label for="nama" class="col-4 col-form-label">Nama</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="nama" name="nama" type="text" class="form-control" value="">
                             </div>
-                            <hr>
                         </div>
-                    <?php } ?>
-                </div>
-                <!-- Akhir Daftar Produk -->
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
-                </div>
-            </footer> -->
-            <!-- End of Footer -->
+                    <div class="form-group row">
+                        <label for="harga" class="col-4 col-form-label">Harga</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="harga" name="harga" type="number" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="stok" class="col-4 col-form-label">Stok</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="stok" name="stok" type="number" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="merk" class="col-4 col-form-label">Merk</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="merk" name="merk" type="text" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="jenis" class="col-4 col-form-label">Kategori</label>
+                        <div class="col-8">
+                            <?php
+                            $sqljenis = "SELECT * FROM jenis_produk";
+                            $rsjenis = $dbh->query($sqljenis);
+                            ?>
+                            <select id="jenis_produk" name="jenis_produk" class="custom-select">
+                                <?php
+                                foreach ($rsjenis as $rowjenis) {
+                                ?>
+                                    <option value="<?= $rowjenis['id'] ?>"><?= $rowjenis['nama'] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="status" class="col-4 col-form-label">Status</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="status" name="status" type="radio" class="form-control" value="Baru">Baru</input>
+                                <input id="status" name="status" type="radio" class="form-control" value="Bekas">Bekas</input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="deskripsi" class="col-4 col-form-label">Deskripsi</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <textarea name="deskripsi" id="deskripsi" style="width: 100%;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offset-4 col-8">
+                        <?php
+                        $button = (empty($_idedit)) ? "Simpan" : "Update";
+                        ?>
+                        <input type="submit" name="proses" type="submit" class="btn btn-primary" value="<?= $button ?>" />
+                        <input type="hidden" name="idedit" value="<?= $_idedit ?>" />
+                    </div>
 
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-</body>
-
-</html>
+                </form>

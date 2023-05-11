@@ -1,3 +1,6 @@
+<?php
+require_once 'koneksi.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,16 +40,6 @@
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -58,7 +51,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Halaman Pengunjung</h6>
-                        <a class="collapse-item" href="daftar_produk.php">Daftar Produk</a>
+                        <a class="collapse-item" href="index.php">Daftar Produk</a>
+                        <a class="collapse-item" href="form_pemesanan.php">Form Pemesanan</a>
                     </div>
                 </div>
             </li>
@@ -72,7 +66,7 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Halaman Admin</h6>
-                        <a class="collapse-item" href="daftar_produk.php">Daftar Produk</a>
+                        <a class="collapse-item" href="index_admin.php">Daftar Produk</a>
                         <a class="collapse-item" href="daftar_jenis_produk.php">Daftar Jenis Produk</a>
                         <a class="collapse-item" href="daftar_pesanan.php">Daftar Pesanan</a>
                         <!-- <a class="collapse-item" href="login.php">Log-in</a> -->
@@ -135,7 +129,7 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Muhammad Al Fatih</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                         </li>
@@ -144,6 +138,66 @@
 
                 </nav>
                 <!-- End of Topbar -->
+
+                <!-- Form -->
+                <form method="POST" action="proses_pesanan.php">
+                    <div class="form-group row">
+                        <label for="nama" class="col-4 col-form-label">Nama</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="nama" name="nama" type="text" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="alamat" class="col-4 col-form-label">Alamat</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <textarea name="alamat" id="alamat"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="qty" class="col-4 col-form-label">Jumlah(QTY)</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="qty" name="qty" type="number" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="jenis" class="col-4 col-form-label">Produk</label>
+                        <div class="col-8">
+                            <?php
+                            $sqljenis = "SELECT * FROM produk";
+                            $rsjenis = $dbh->query($sqljenis);
+                            ?>
+                            <select id="produk" name="produk" class="custom-select">
+                                <?php
+                                foreach ($rsjenis as $rowjenis) {
+                                ?>
+                                    <option value="<?= $rowjenis['id'] ?>"><?= $rowjenis['nama'] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="tanggal" class="col-4 col-form-label">Tanggal</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="tanggal" name="tanggal" type="datetime-local" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-4 col-8">
+                            <input type="submit" name="proses" type="submit" class="btn btn-primary" value="Pesan" />
+                        </div>
+                    </div>
+                </form>
+                <!-- Akhir Form -->
             </div>
             <!-- End of Main Content -->
 

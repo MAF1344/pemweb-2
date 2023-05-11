@@ -1,5 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+require_once 'koneksi.php';
+?>
+<?php
+$_idedit = $_GET['idedit'];
+if (!empty($_idedit)) {
+    // edit
+    $sql = "SELECT * FROM pesanan WHERE id=?";
+    $st = $dbh->prepare($sql);
+    $st->execute([$_idedit]);
+    $row = $st->fetch();
+} else {
+    // new data
+    $row = [];
+}
+?>
 
 <head>
 
@@ -9,7 +23,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Cards</title>
+    <title>Form Edit Produk</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -37,16 +51,6 @@
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -58,7 +62,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Halaman Pengunjung</h6>
-                        <a class="collapse-item" href="daftar_produk.php">Daftar Produk</a>
+                        <a class="collapse-item" href="index.php">Daftar Produk</a>
+                        <a class="collapse-item" href="form_pemesanan.php">Form Pemesanan</a>
                     </div>
                 </div>
             </li>
@@ -72,7 +77,7 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Halaman Admin</h6>
-                        <a class="collapse-item" href="daftar_produk.php">Daftar Produk</a>
+                        <a class="collapse-item" href="index_admin.php">Daftar Produk</a>
                         <a class="collapse-item" href="daftar_jenis_produk.php">Daftar Jenis Produk</a>
                         <a class="collapse-item" href="daftar_pesanan.php">Daftar Pesanan</a>
                         <!-- <a class="collapse-item" href="login.php">Log-in</a> -->
@@ -135,7 +140,7 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Muhammad Al Fatih</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                         </li>
@@ -144,59 +149,63 @@
 
                 </nav>
                 <!-- End of Topbar -->
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                <form method="POST" action="proses_edit_pesanan.php">
+                    <div class="form-group row">
+                        <label for="nama" class="col-4 col-form-label">Nama</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="nama" name="nama" type="text" class="form-control" value="">
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </footer> -->
-            <!-- End of Footer -->
+                    <div class="form-group row">
+                        <label for="alamat" class="col-4 col-form-label">Alamat</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <textarea name="alamat" id="alamat"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="qty" class="col-4 col-form-label">Jumlah(QTY)</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="qty" name="qty" type="number" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="jenis" class="col-4 col-form-label">Produk</label>
+                        <div class="col-8">
+                            <?php
+                            $sqljenis = "SELECT * FROM produk";
+                            $rsjenis = $dbh->query($sqljenis);
+                            ?>
+                            <select id="produk" name="produk" class="custom-select">
+                                <?php
+                                foreach ($rsjenis as $rowjenis) {
+                                ?>
+                                    <option value="<?= $rowjenis['id'] ?>"><?= $rowjenis['nama'] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="tanggal" class="col-4 col-form-label">Tanggal</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="tanggal" name="tanggal" type="datetime-local" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offset-4 col-8">
+                        <?php
+                        $button = (empty($_idedit)) ? "Simpan" : "Update";
+                        ?>
+                        <input type="submit" name="proses" type="submit" class="btn btn-primary" value="<?= $button ?>" />
+                        <input type="hidden" name="idedit" value="<?= $_idedit ?>" />
+                    </div>
 
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-</body>
-
-</html>
+                </form>

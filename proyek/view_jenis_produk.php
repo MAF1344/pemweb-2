@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Daftar Produk</title>
+    <title>E-Commerce Elektronik</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -18,10 +18,12 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- FontAwasome -->
+    <script src="https://kit.fontawesome.com/d09ee2361d.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -37,16 +39,6 @@
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -58,7 +50,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Halaman Pengunjung</h6>
-                        <a class="collapse-item" href="daftar_produk.php">Daftar Produk</a>
+                        <a class="collapse-item" href="index.php">Daftar Produk</a>
+                        <a class="collapse-item" href="form_pemesanan.php">Form Pemesanan</a>
                     </div>
                 </div>
             </li>
@@ -72,7 +65,7 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Halaman Admin</h6>
-                        <a class="collapse-item" href="daftar_produk.php">Daftar Produk</a>
+                        <a class="collapse-item" href="index_admin.php">Daftar Produk</a>
                         <a class="collapse-item" href="daftar_jenis_produk.php">Daftar Jenis Produk</a>
                         <a class="collapse-item" href="daftar_pesanan.php">Daftar Pesanan</a>
                         <!-- <a class="collapse-item" href="login.php">Log-in</a> -->
@@ -135,16 +128,42 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Muhammad Al Fatih</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
-                            <!-- Dropdown - User Information -->
                         </li>
 
                     </ul>
 
                 </nav>
                 <!-- End of Topbar -->
+
+                <!-- Detail Pesanan -->
+                <?php
+                require_once 'koneksi.php';
+                ?>
+                <?php
+                $_id = $_GET['id'];
+                $sql = "SELECT * FROM jenis_produk WHERE id=?";
+                $st = $dbh->prepare($sql);
+                $st->execute([$_id]);
+                $row = $st->fetch();
+                ?>
+
+                <h1>DETAIL JENIS PRODUK</h1>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td><?= $row['id'] ?></td>
+                        </tr>
+                        <tr>
+                            <td>Nama</td>
+                            <td><?= $row['nama'] ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Akhir Detail Pesanan -->
             </div>
             <!-- End of Main Content -->
 
@@ -152,7 +171,7 @@
             <!-- <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; Your Website 2021</span>
                     </div>
                 </div>
             </footer> -->
@@ -197,6 +216,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 

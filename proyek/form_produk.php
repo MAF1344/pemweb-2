@@ -1,10 +1,6 @@
 <?php
 require_once 'koneksi.php';
 ?>
-<?php
-$sql = "SELECT * FROM produk";
-$rs = $dbh->query($sql);
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +12,7 @@ $rs = $dbh->query($sql);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Daftar Produk</title>
+    <title>Form Pemesanan</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,7 +20,6 @@ $rs = $dbh->query($sql);
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -43,6 +38,7 @@ $rs = $dbh->query($sql);
                 </div>
                 <div class="sidebar-brand-text mx-3">E-Commerce</div>
             </a>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -136,7 +132,6 @@ $rs = $dbh->query($sql);
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
-                            <!-- Dropdown - User Information -->
                         </li>
 
                     </ul>
@@ -144,28 +139,82 @@ $rs = $dbh->query($sql);
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Daftar Produk -->
-
-                <div class="kartu" style="display: grid;">
-                    <?php foreach ($rs as $row) { ?>
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img alt="Bootstrap Image Preview" src="img/petir.png" style="width: 100%;" />
-                                </div>
-                                <div class="col-md-8">
-                                    <h3><?= $row['nama'] ?></h3>
-                                    <p><?= $row['deskripsi'] ?></p>
-                                </div>
-                                <div class="col-md-2">
-                                    <a class=" btn btn-primary" href="view_produk.php?id=<?= $row['id'] ?>">Detail Produk</a>
-                                </div>
+                <!-- Form -->
+                <form method="POST" action="proses_produk.php">
+                    <div class="form-group row">
+                        <label for="nama" class="col-4 col-form-label">Nama</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="nama" name="nama" type="text" class="form-control" value="">
                             </div>
-                            <hr>
                         </div>
-                    <?php } ?>
-                </div>
-                <!-- Akhir Daftar Produk -->
+                    </div>
+                    <div class="form-group row">
+                        <label for="harga" class="col-4 col-form-label">Harga</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="harga" name="harga" type="number" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="stok" class="col-4 col-form-label">Stok</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="stok" name="stok" type="number" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="merk" class="col-4 col-form-label">Merk</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="merk" name="merk" type="text" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="jenis" class="col-4 col-form-label">Kategori</label>
+                        <div class="col-8">
+                            <?php
+                            $sqljenis = "SELECT * FROM jenis_produk";
+                            $rsjenis = $dbh->query($sqljenis);
+                            ?>
+                            <select id="jenis_produk" name="jenis_produk" class="custom-select">
+                                <?php
+                                foreach ($rsjenis as $rowjenis) {
+                                ?>
+                                    <option value="<?= $rowjenis['id'] ?>"><?= $rowjenis['nama'] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="status" class="col-4 col-form-label">Status</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="status" name="status" type="radio" class="form-control" value="Baru">Baru</input>
+                                <input id="status" name="status" type="radio" class="form-control" value="Bekas">Bekas</input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="deskripsi" class="col-4 col-form-label">Deskripsi</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <textarea name="deskripsi" id="deskripsi" style="width: 100%;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-4 col-8">
+                            <input type="submit" name="proses" type="submit" class="btn btn-primary" value="Submit" />
+                        </div>
+                    </div>
+                </form>
+                <!-- Akhir Form -->
             </div>
             <!-- End of Main Content -->
 

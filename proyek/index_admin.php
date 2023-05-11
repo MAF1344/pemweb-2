@@ -56,7 +56,7 @@ $rs = $dbh->query($sql);
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Halaman Pengunjung</h6>
                         <a class="collapse-item" href="index.php">Daftar Produk</a>
-                        <a class="collapse-item" href="form_pemesanan.php">Form Pemesanan</a>
+                        <a class="collapse-item" href="form_produk.php">Form Pemesanan</a>
                     </div>
                 </div>
             </li>
@@ -145,26 +145,35 @@ $rs = $dbh->query($sql);
                 <!-- End of Topbar -->
 
                 <!-- Daftar Produk -->
-
-                <div class="kartu" style="display: grid;">
-                    <?php foreach ($rs as $row) { ?>
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img alt="Bootstrap Image Preview" src="img/petir.png" style="width: 100%;" />
-                                </div>
-                                <div class="col-md-8">
-                                    <h3><?= $row['nama'] ?></h3>
-                                    <p><?= $row['deskripsi'] ?></p>
-                                </div>
-                                <div class="col-md-2">
-                                    <a class=" btn btn-primary" href="view_produk.php?id=<?= $row['id'] ?>">Detail Produk</a>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                    <?php } ?>
-                </div>
+                <a class="btn btn-primary" href="form_produk.php" role="button" style="margin: 0.5rem;">Tambah Produk</a>
+                <table class="table" width="100%" border="1" cellspacing="2" cellpadding="2">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Harga</th>
+                            <th>Stok</th>
+                            <th>Opsi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($rs as $row) {
+                        ?>
+                            <tr>
+                                <td><?= $row['nama'] ?></td>
+                                <td>Rp. <?= $_format_harga = number_format($row['harga'], 0, ',', '.'); ?></td>
+                                <td><?= $row['stok'] ?></td>
+                                <td>
+                                    <a class="btn btn-primary" href="view_produk.php?id=<?= $row['id'] ?>">View</a>
+                                    <a class="btn btn-primary" href="form_edit_produk.php?idedit=<?= $row['id'] ?>">Edit</a>
+                                    <a class="btn btn-primary" href="delete_produk.php?iddel=<?= $row['id'] ?>" onclick="if(!confirm('Anda Yakin Hapus Data Produk <?= $row['nama'] ?>?')) {return false}">Delete</a>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
                 <!-- Akhir Daftar Produk -->
             </div>
             <!-- End of Main Content -->

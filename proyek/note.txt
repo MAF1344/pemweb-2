@@ -1,0 +1,31 @@
+2. Deskripsi Aplikasi 
+    - Aplikasi ecommerce sederhana yang dibuat terdiri dari halaman untuk pengunjung dan halaman untuk admin (silakan menggunakan template dari internet)^
+    - Pengunjung dapat melihat daftar produk dan detail produk, serta melakukan pemesanan produk^
+    - Admin dapat melakukan CRUD pada daftar produk dan jenis produk, serta melihat daftar pesanan^
+    - Gambar untuk semua produk menggunakan gambar yang sama^
+    - Aplikasi dibuat dengan menggunakan PHP dan MySQL, dengan tiga tabel tanpa relasi yaitu: produk, jenis_produk, dan pesanan^
+    - File SQL akan dicantumkan bersama dengan tugas ini
+3. Fitur Aplikasi
+    - Halaman Pengunjung
+        - Halaman daftar produk^
+        - Halaman detail produk^
+        - Halaman form pemesanan^
+        - Halaman detail pesanan^
+    - Halaman Admin
+        - Halaman daftar produk: menampilkan daftar produk dan menu untuk CRUD^
+        - Isi kolom `jenis_produk` pada tabel `produk` harus berdasarkan nama dari tabel `jenis_produk`^
+        - Halaman daftar jenis produk: menampilkan daftar jenis produk dan menu untuk CRUD^
+        - Halaman daftar pesanan: menampilkan daftar pesanan yang sudah dipesan oleh pengunjung^
+4. Alur Pemesanan Produk
+    1. Pengunjung mengunjungi web^
+    2. Web menampilkan daftar produk yang dijual (sesuai isi dari tabel produk)^
+    3. Semua produk memiliki gambar yang sama (tidak perlu menambahkan fungsi upload gambar)^
+    4. Pengunjung bisa meng-klik produk untuk ditampilkan detail produk^
+    5. Pada halaman detail produk, terdapat tombol `beli`^
+    6. Setelah klik beli, pengunjung harus mengisi form: quantity (berapa banyak produk yg dibeli), nama, dan alamat.^
+    7. Data pesanan disimpan ke tabel pesanan. field `tanggal` diisi dengan tanggal saat ini (cari di internet: cara mendapatkan tanggal saat ini di php), field `total harga` diisi dengan harga produk di kali qty.^
+    8. Pengunjung diperlihatkan info pesanan (Nama produk, harga satuan produk, jumlah beli (quantity), total harga, alamat)^
+5. Deadline
+    - Tugas ini harus selesai dan dikumpulkan paling lambat pada tanggal 15 Mei 2023 pukul 23:59.
+6. Tambahan
+    - Aplikasi ini tidak menggunakan fungsi login dan session. Halaman admin dapat diakses tanpa login.^
